@@ -17,7 +17,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
     var portalItem:AGSPortalItem!
     var authenticationManager:AGSAuthenticationManager = AGSAuthenticationManager.sharedAuthenticationManager()
     var isLoggedIn:Bool = false
-    var portalItemId:String = "caf7718cd2974a2e997cf98aa005ef25"
+    var portalItemId:String = "c0edf8284710428abea81b76200a190f"
     
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var errorMessage: UILabel!
@@ -26,8 +26,9 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        errorMessage.text = ""
-        authenticationManager.delegate = self
+        self.logAppInfo("")
+        self.authenticationManager.delegate = self
+        self.loadMap()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,28 +42,29 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         case AGSAuthenticationChallengeType.OAuth,
              AGSAuthenticationChallengeType.ClientCertificate,
              AGSAuthenticationChallengeType.UntrustedHost:
-            errorMessage.text = "Using default challenge handler"
+            self.logAppInfo("Using default challenge handler")
             challenge.continueWithDefaultHandling()
             
         case AGSAuthenticationChallengeType.UsernamePassword:
-            errorMessage.text = "Overriding challenge handler for name/password"
+            self.logAppInfo("Overriding challenge handler for name/password")
+            challenge.continueWithDefaultHandling()
             
         default:
-            errorMessage.text = "Unknown challenge handler"
+            self.logAppInfo("Unknown challenge handler")
         }
     }
     
     func loadMap () {
-        errorMessage.text = "Loading map..."
+        self.logAppInfo("Loading map...")
         self.mapView.map = self.createMapFromPortalItem()
         if self.mapView.map == nil {
-            errorMessage.text = "Could not load map"
+            self.logAppInfo("Could not load map")
         } else {
             self.mapView.map?.loadWithCompletion() { (error : NSError?) in
                 if error == nil {
-                    self.errorMessage.text = ""
+                    self.logAppInfo("")
                 } else {
-                    self.errorMessage.text = "Error loading map (\(error!.code)): \(error!.localizedDescription)"
+                    self.logAppInfo("Error loading map (\(error!.code)): \(error!.localizedDescription)")
                 }
             }
         }
@@ -108,8 +110,15 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         }
     }
     
+    func logAppInfo (message: String) {
+        self.errorMessage.text = ""
+        if message != "" {
+            NSLog(message)
+        }
+    }
+    
     @IBAction func protocolChanged(sender: UISegmentedControl) {
-        errorMessage.text = "Using " + self.stringFromProtocolSelection() + " authentication."
+        self.logAppInfo("Using " + self.stringFromProtocolSelection() + " authentication.")
     }
     
     @IBAction func loginButtonAction(sender: AnyObject) {
@@ -118,7 +127,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         if isLoggedIn {
             
         } else {
-            errorMessage.text = "Trying to login with " + self.stringFromProtocolSelection() + " authentication"
+            self.logAppInfo("Trying to login with " + self.stringFromProtocolSelection() + " authentication")
         }
     }
 }

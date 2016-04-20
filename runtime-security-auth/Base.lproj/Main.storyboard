@@ -18,6 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x3Q-Pn-dwE" customClass="AGSMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ArcGIS Runtime Authentication Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cu2-gu-Yvh">
                                 <rect key="frame" x="20" y="28" width="560" height="28"/>
                                 <constraints>
@@ -27,7 +31,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error messages" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jn-uV-Due">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error messages" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9Jn-uV-Due">
                                 <rect key="frame" x="20" y="64" width="560" height="69"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="69" id="gL4-WF-4qP"/>
@@ -64,20 +68,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="9Jn-uV-Due" firstAttribute="trailing" secondItem="cu2-gu-Yvh" secondAttribute="trailing" id="3Qe-If-FVg"/>
+                            <constraint firstItem="x3Q-Pn-dwE" firstAttribute="centerX" secondItem="Ccm-zr-5GY" secondAttribute="centerX" id="4n5-al-5fE"/>
                             <constraint firstItem="Jme-vd-bBr" firstAttribute="top" secondItem="Ccm-zr-5GY" secondAttribute="bottom" constant="18" id="6ar-6g-Vx1"/>
                             <constraint firstItem="cu2-gu-Yvh" firstAttribute="centerX" secondItem="Ccm-zr-5GY" secondAttribute="centerX" id="7wh-4K-wat"/>
+                            <constraint firstItem="x3Q-Pn-dwE" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7yw-NA-ISF"/>
                             <constraint firstItem="9Jn-uV-Due" firstAttribute="leading" secondItem="cu2-gu-Yvh" secondAttribute="leading" id="8A1-fF-84I"/>
+                            <constraint firstItem="x3Q-Pn-dwE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9Q0-0u-SLc"/>
                             <constraint firstItem="cu2-gu-Yvh" firstAttribute="centerX" secondItem="Jme-vd-bBr" secondAttribute="centerX" id="9hH-41-eQ8"/>
                             <constraint firstItem="9Jn-uV-Due" firstAttribute="top" secondItem="cu2-gu-Yvh" secondAttribute="bottom" constant="8" symbolic="YES" id="IHE-Bi-XWq"/>
                             <constraint firstItem="cu2-gu-Yvh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="L5K-G3-DXu"/>
                             <constraint firstItem="cu2-gu-Yvh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Wju-JM-S7S"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jme-vd-bBr" secondAttribute="bottom" constant="69" id="qdB-DD-cla"/>
                             <constraint firstItem="cu2-gu-Yvh" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="snS-hk-n2c"/>
+                            <constraint firstItem="x3Q-Pn-dwE" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="v2K-fI-GKf"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="errorMessage" destination="9Jn-uV-Due" id="xDg-zo-dNS"/>
                         <outlet property="loginButton" destination="Ccm-zr-5GY" id="nco-Ct-AM2"/>
+                        <outlet property="mapView" destination="x3Q-Pn-dwE" id="8Qu-Rl-MId"/>
                         <outlet property="protocolSelecter" destination="Jme-vd-bBr" id="4hW-wh-qaB"/>
                     </connections>
                 </viewController>
