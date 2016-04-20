@@ -15,6 +15,7 @@
 		E7C46F491CC59F2900D58826 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C46F471CC59F2900D58826 /* LaunchScreen.storyboard */; };
 		E7C46F541CC59F2900D58826 /* runtime_security_authTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F531CC59F2900D58826 /* runtime_security_authTests.swift */; };
 		E7C46F5F1CC59F2900D58826 /* runtime_security_authUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F5E1CC59F2900D58826 /* runtime_security_authUITests.swift */; };
+		E7C46F6D1CC7044E00D58826 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F6C1CC7044E00D58826 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		E7C46F5A1CC59F2900D58826 /* runtime-security-authUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "runtime-security-authUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7C46F5E1CC59F2900D58826 /* runtime_security_authUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = runtime_security_authUITests.swift; sourceTree = "<group>"; };
 		E7C46F601CC59F2900D58826 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7C46F6C1CC7044E00D58826 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		E7C46F2F1CC59F2800D58826 = {
 			isa = PBXGroup;
 			children = (
+				E7C46F6C1CC7044E00D58826 /* README.md */,
 				E7C46F3A1CC59F2900D58826 /* runtime-security-auth */,
 				E7C46F521CC59F2900D58826 /* runtime-security-authTests */,
 				E7C46F5D1CC59F2900D58826 /* runtime-security-authUITests */,
@@ -264,6 +267,7 @@
 			files = (
 				E7C46F3E1CC59F2900D58826 /* ViewController.swift in Sources */,
 				E7C46F441CC59F2900D58826 /* runtime_security_auth.xcdatamodeld in Sources */,
+				E7C46F6D1CC7044E00D58826 /* README.md in Sources */,
 				E7C46F3C1CC59F2900D58826 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
