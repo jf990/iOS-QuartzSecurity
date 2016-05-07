@@ -14,3 +14,10 @@ In order to do this we need a developers account on [ArcGIS for Developers](http
 
 To get started for the first time, follow the [iOS Quartz SDK setup instructions](https://developers.arcgis.com/ios/beta/swift/guide/install.htm).
 
+## API Design Issues
+
+My opinion, there are flaws in the current API design:
+
+* There is no way to login without requesting a portal item. AGSAuthenticationManager or AGSPortal should have a method to login. The forced login would use the AGSAuthenticationChallenge flow. With AGSAuthenticationManager the issue is there is no way to indicate what your portal is (it's on the AGSPortal object).
+* Any login of any kind should fire a callback/signal/delegate so the developer can know a successful/failed login attempt has been completed. You cannot use, for example, a successful load of a portal item, because you have no way of knowing post load if that portal item actually requested a login.
+* Error 499 should trigger a login.

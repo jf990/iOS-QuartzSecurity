@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E7069A0C1CD948C000928782 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A0B1CD948C000928782 /* TestData.swift */; };
+		E7069A0D1CD948C000928782 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A0B1CD948C000928782 /* TestData.swift */; };
+		E7069A0E1CD948C000928782 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A0B1CD948C000928782 /* TestData.swift */; };
+		E7069A101CDC152300928782 /* mapPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A0F1CDC152300928782 /* mapPickerViewController.swift */; };
+		E7069A111CDC152300928782 /* mapPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A0F1CDC152300928782 /* mapPickerViewController.swift */; };
+		E7069A121CDC152300928782 /* mapPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A0F1CDC152300928782 /* mapPickerViewController.swift */; };
+		E7069A141CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */; };
+		E7069A151CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */; };
+		E7069A161CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */; };
 		E7C46F3C1CC59F2900D58826 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F3B1CC59F2900D58826 /* AppDelegate.swift */; };
 		E7C46F3E1CC59F2900D58826 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F3D1CC59F2900D58826 /* ViewController.swift */; };
 		E7C46F411CC59F2900D58826 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C46F3F1CC59F2900D58826 /* Main.storyboard */; };
@@ -15,7 +24,6 @@
 		E7C46F491CC59F2900D58826 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C46F471CC59F2900D58826 /* LaunchScreen.storyboard */; };
 		E7C46F541CC59F2900D58826 /* runtime_security_authTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F531CC59F2900D58826 /* runtime_security_authTests.swift */; };
 		E7C46F5F1CC59F2900D58826 /* runtime_security_authUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F5E1CC59F2900D58826 /* runtime_security_authUITests.swift */; };
-		E7C46F6D1CC7044E00D58826 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F6C1CC7044E00D58826 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +44,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E7069A0B1CD948C000928782 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		E7069A0F1CDC152300928782 /* mapPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapPickerViewController.swift; sourceTree = "<group>"; };
+		E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		E7C46F381CC59F2900D58826 /* runtime-security-auth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "runtime-security-auth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7C46F3B1CC59F2900D58826 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7C46F3D1CC59F2900D58826 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +120,9 @@
 				E7C46F471CC59F2900D58826 /* LaunchScreen.storyboard */,
 				E7C46F4A1CC59F2900D58826 /* Info.plist */,
 				E7C46F421CC59F2900D58826 /* runtime_security_auth.xcdatamodeld */,
+				E7069A0B1CD948C000928782 /* TestData.swift */,
+				E7069A0F1CDC152300928782 /* mapPickerViewController.swift */,
+				E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */,
 			);
 			path = "runtime-security-auth";
 			sourceTree = "<group>";
@@ -265,9 +279,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7069A101CDC152300928782 /* mapPickerViewController.swift in Sources */,
 				E7C46F3E1CC59F2900D58826 /* ViewController.swift in Sources */,
 				E7C46F441CC59F2900D58826 /* runtime_security_auth.xcdatamodeld in Sources */,
-				E7C46F6D1CC7044E00D58826 /* README.md in Sources */,
+				E7069A141CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */,
+				E7069A0C1CD948C000928782 /* TestData.swift in Sources */,
 				E7C46F3C1CC59F2900D58826 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +292,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7069A111CDC152300928782 /* mapPickerViewController.swift in Sources */,
+				E7069A151CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */,
 				E7C46F541CC59F2900D58826 /* runtime_security_authTests.swift in Sources */,
+				E7069A0D1CD948C000928782 /* TestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,7 +303,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7069A121CDC152300928782 /* mapPickerViewController.swift in Sources */,
+				E7069A161CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */,
 				E7C46F5F1CC59F2900D58826 /* runtime_security_authUITests.swift in Sources */,
+				E7069A0E1CD948C000928782 /* TestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +535,7 @@
 				E7C46F651CC59F2900D58826 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E7C46F661CC59F2900D58826 /* Build configuration list for PBXNativeTarget "runtime-security-authTests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +544,7 @@
 				E7C46F681CC59F2900D58826 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E7C46F691CC59F2900D58826 /* Build configuration list for PBXNativeTarget "runtime-security-authUITests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +553,7 @@
 				E7C46F6B1CC59F2900D58826 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
