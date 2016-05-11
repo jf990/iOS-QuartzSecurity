@@ -9,20 +9,22 @@
 //
 
 import Foundation
+import ArcGIS
 
 public class TestData : NSObject {
     
     static let sharedTestData = TestData()
     private override init() {} // make sure no one outside can init this object.
     
-    var isUserLoggedIn = false
+    var isUserLoggedIn = false     // so other views can know login succeeded
+    var portal:AGSPortal!          // if a user is logged in then this is the Portal
     
     let forceUserToLogin = false
     let useCustomLoginView = true
     let portalURL:String = "http://www.arcgis.com"
     let clientId:String = "nr3zJGlmQKOqwo5O"
     
-    // A list of basemaps on my AGOL account
+    // A list of basemaps on my AGOL account to use when we are not logged in
     // "image", "title", "itemId"
     let portalItems: Array = [
         ["Imagery_Labels_Trans", "Imagery With Labels", "d802f08316e84c6592ef681c50178f17"], // Esri imagery w/labels

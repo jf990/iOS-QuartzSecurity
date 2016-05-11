@@ -175,6 +175,43 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
+                        <view key="backgroundView" contentMode="scaleToFill" id="Nlc-r9-ahy">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0s6-tT-FSs">
+                                    <rect key="frame" x="23" y="256" width="555" height="88"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <color key="textColor" red="0.65174077181208057" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x2E-RZ-N1j">
+                                    <rect key="frame" x="532" y="25" width="46" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                                    <state key="normal" title="X">
+                                        <color key="titleColor" red="0.65174077181208057" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelButtonAction:" destination="KU8-9f-93O" eventType="touchUpInside" id="cks-BD-ctE"/>
+                                    </connections>
+                                </button>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gIU-bW-Yh4">
+                                    <rect key="frame" x="290" y="352" width="20" height="20"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="0s6-tT-FSs" firstAttribute="leading" secondItem="Nlc-r9-ahy" secondAttribute="leading" constant="23" id="Cme-Wv-GGH"/>
+                                <constraint firstAttribute="bottom" secondItem="0s6-tT-FSs" secondAttribute="bottom" constant="256" id="Dkc-wr-Ndf"/>
+                                <constraint firstItem="0s6-tT-FSs" firstAttribute="top" secondItem="Nlc-r9-ahy" secondAttribute="top" constant="256" id="Ep7-Bf-pHO"/>
+                                <constraint firstItem="gIU-bW-Yh4" firstAttribute="leading" secondItem="Nlc-r9-ahy" secondAttribute="leading" constant="290" id="Pum-uw-siS"/>
+                                <constraint firstItem="gIU-bW-Yh4" firstAttribute="top" secondItem="0s6-tT-FSs" secondAttribute="bottom" constant="8" id="SIU-IR-iaD"/>
+                                <constraint firstAttribute="trailing" secondItem="x2E-RZ-N1j" secondAttribute="trailing" constant="22" id="aDt-sw-wav"/>
+                                <constraint firstItem="x2E-RZ-N1j" firstAttribute="top" secondItem="Nlc-r9-ahy" secondAttribute="top" constant="25" id="etG-Pm-aZu"/>
+                                <constraint firstAttribute="trailing" secondItem="0s6-tT-FSs" secondAttribute="trailing" constant="22" id="qOP-bh-36y"/>
+                                <constraint firstAttribute="trailing" secondItem="gIU-bW-Yh4" secondAttribute="trailing" constant="290" id="zWy-ra-fCY"/>
+                            </constraints>
+                        </view>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BasemapCell" id="Kf7-UG-drz" customClass="mapPickerCollectionViewCell" customModule="runtime_security_auth" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="140" height="111"/>
@@ -220,6 +257,10 @@
                         </connections>
                     </collectionView>
                     <connections>
+                        <outlet property="cancelButton" destination="x2E-RZ-N1j" id="AHy-ch-CM9"/>
+                        <outlet property="groupUIView" destination="Nlc-r9-ahy" id="nG1-mf-9BI"/>
+                        <outlet property="infoMessage" destination="0s6-tT-FSs" id="rkY-eh-cuj"/>
+                        <outlet property="loadingActivity" destination="gIU-bW-Yh4" id="ell-in-97u"/>
                         <segue destination="sPq-es-tYp" kind="unwind" identifier="unwindToMain" unwindAction="unwindToMain:" id="Xhr-Z2-Gbs"/>
                     </connections>
                 </collectionViewController>

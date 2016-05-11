@@ -15,34 +15,57 @@ import ArcGIS
 
 class mapPickerViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    private var testData:TestData = TestData.sharedTestData;
-    private let reuseIdentifier = "BasemapCell"
-    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 10.0, bottom: 20.0, right: 10.0)
-    internal var selectedItem:Int = -1
+    let reuseIdentifier = "BasemapCell"
+    let sectionInsets = UIEdgeInsets(top: 20.0, left: 10.0, bottom: 20.0, right: 10.0)
+    let testData:TestData = TestData.sharedTestData;
+    var selectedItem:Int = -1
+    var queryResults:NSArray? = nil
 
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var groupUIView: UIView!
+    @IBOutlet weak var infoMessage: UILabel!
+    @IBOutlet weak var loadingActivity: UIActivityIndicatorView!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if self.testData.isUserLoggedIn {
+            // initiate a query to the portal to get the possible basemaps
+            self.updateUserMessageWithActivity("Getting your basemaps")
+            let basemapQuery = self.testData.portal!.portalInfo?.basemapGalleryGroupQuery
+            if basemapQuery != nil {
+                let queryParams = AGSPortalQueryParams(query: basemapQuery!)
+                self.testData.portal.findItemsWithQueryParams(queryParams, completion: { (portalResultSet, error) in
+                    if error != nil {
+                        self.updateUserMessageStopActivity("Error loading basemaps: (\(error!.code)): \(error!.localizedDescription)")
+                    } else if portalResultSet!.results != nil {
+                        self.queryResults = portalResultSet!.results
+                        if self.queryResults!.count == 0 {
+                            self.updateUserMessageStopActivity("No basemaps were found on your account")
+                        } else {
+                            self.updateUserMessageStopActivity("")
+                        }
+                        self.collectionView!.reloadData()
+                    } else {
+                        // neither error nor results?
+                        self.updateUserMessageStopActivity("You have no basemaps")
+                    }
+                })
+            }
+        } else {
+            self.updateUserMessage("")
+            self.hideFeedbackUI()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.queryResults = nil
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 
     internal func getSelectedItemIndex() -> Int {
         return self.selectedItem
@@ -50,20 +73,30 @@ class mapPickerViewController: UICollectionViewController, UICollectionViewDeleg
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.selectedItem = indexPath.row
-        self.performSegueWithIdentifier("unwindToMain", sender: self)
+        self.closeView()
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! mapPickerCollectionViewCell
         cell.backgroundColor = UIColor.lightGrayColor()
-        let portalItemInfo = testData.portalItems[indexPath.row]
-        cell.titleLabel.text = portalItemInfo[1]
-        cell.imageView.image = UIImage(named: portalItemInfo[0])
+        if self.queryResults != nil {
+            let portalItemInfo:AGSPortalItem = self.queryResults![indexPath.row] as! AGSPortalItem
+            cell.titleLabel.text = portalItemInfo.title
+            cell.imageView.image = UIImage(named: "dark_gray_canvas")
+        } else {
+            let portalItemInfo = testData.portalItems[indexPath.row]
+            cell.titleLabel.text = portalItemInfo[1]
+            cell.imageView.image = UIImage(named: portalItemInfo[0])
+        }
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return testData.portalItems.count
+        if self.queryResults != nil {
+            return self.queryResults!.count
+        } else {
+            return testData.portalItems.count
+        }
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -71,7 +104,11 @@ class mapPickerViewController: UICollectionViewController, UICollectionViewDeleg
     }
     
     func basemapForIndexPath(indexPath: NSIndexPath) -> String {
-        return testData.portalItems[indexPath.row][0]
+        if self.queryResults != nil {
+            return self.queryResults![indexPath.row] as! String
+        } else {
+            return testData.portalItems[indexPath.row][0]
+        }
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -83,7 +120,42 @@ class mapPickerViewController: UICollectionViewController, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
         return CGSize(width: 140, height: 93 + 18)
+    }
+    
+    func showFeedbackUI () {
+        self.groupUIView.hidden = false
+    }
+    
+    func hideFeedbackUI () {
+        self.loadingActivity.stopAnimating()
+        self.groupUIView.hidden = true
+    }
+    
+    func updateUserMessage (message: String) {
+        if self.groupUIView.hidden {
+            self.showFeedbackUI()
+        }
+        self.infoMessage.text = message
+    }
+    
+    func updateUserMessageWithActivity (message: String) {
+        self.updateUserMessage(message)
+        self.loadingActivity.hidden = false
+        self.loadingActivity.startAnimating()
+    }
+    
+    func updateUserMessageStopActivity (message: String) {
+        self.updateUserMessage(message)
+        self.loadingActivity.stopAnimating()
+        self.loadingActivity.hidden = true
+    }
+
+    func closeView () {
+        self.performSegueWithIdentifier("unwindToMain", sender: self)
+    }
+    
+    @IBAction func cancelButtonAction (sender: AnyObject) {
+        self.closeView()
     }
 }

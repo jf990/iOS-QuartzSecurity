@@ -13,7 +13,6 @@ import ArcGIS
 class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
 
     var activeChallenge:AGSAuthenticationChallenge?
-    var portal:AGSPortal!
     var authenticationManager:AGSAuthenticationManager = AGSAuthenticationManager.sharedAuthenticationManager()
     var isLoggingIn:Bool = false
     var isKeyboardShowing = false
@@ -144,12 +143,12 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
      */
     func createMapFromPortalItem (portalItemId:String, loginRequired:Bool) -> AGSMap {
         
-        if (self.portal == nil) {
-            self.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: loginRequired)
+        if (self.testData.portal == nil) {
+            self.testData.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: loginRequired)
         }
-        self.portal.loadWithCompletion() { (error) in
+        self.testData.portal.loadWithCompletion() { (error) in
             if error == nil {
-                if self.portal.loadStatus == AGSLoadStatus.Loaded {
+                if self.testData.portal.loadStatus == AGSLoadStatus.Loaded {
                     if self.isLoggingIn {
                         self.logAppInfo("Loaded portal item " + portalItemId + ", maybe the user is logged in?")
                         // Here's a problem: loading the map succeeds but we don't know if the authentication flow was invoked. This
@@ -164,7 +163,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
             }
             self.isLoggingIn = false
         }
-        return AGSMap(item: AGSPortalItem(portal: self.portal, itemID: portalItemId))
+        return AGSMap(item: AGSPortalItem(portal: self.testData.portal, itemID: portalItemId))
     }
     
     /**
@@ -172,19 +171,19 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
      */
     func loginToPortal () {
         
-        if (self.portal == nil) {
-            self.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: true)
+        if (self.testData.portal == nil) {
+            self.testData.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: true)
         }
-        self.portal.loadWithCompletion() { (error) in
+        self.testData.portal.loadWithCompletion() { (error) in
             if error == nil {
-                if self.portal.loadStatus == AGSLoadStatus.Loaded {
+                if self.testData.portal.loadStatus == AGSLoadStatus.Loaded {
                     self.logAppInfo("Logged in to portal " + self.testData.portalURL)
                     if (self.loginActivity.isAnimating()) {
                         self.hideLoginView(true)
-                        self.userIsLoggedIn()
                     }
+                    self.userIsLoggedIn()
                 } else {
-                    self.logAppInfo("There was an error loading the portal status: \(self.portal.loadStatus)")
+                    self.logAppInfo("There was an error loading the portal status: \(self.testData.portal.loadStatus)")
                 }
             } else {
                 self.logAppInfo("There was an error loading the portal: " + error.debugDescription)
@@ -242,7 +241,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
      */
     func userIsLoggedOut () {
         self.authenticationManager.credentialCache.removeAllCredentials()
-        self.portal = nil
+        self.testData.portal = nil
         self.testData.isUserLoggedIn = false
         self.loginButton.setTitle("Log in", forState: UIControlState.Normal)
         self.logAppInfo("Logout complete - credentials cleared.")
