@@ -115,6 +115,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
                     self.logAppInfo("")
                 } else {
                     self.logAppInfo("Error loading map (\(error!.code)): \(error!.localizedDescription)")
+                    self.lastSelectedPortalItem = -1
                     
                     // just in case if the token is bad then attempt to clear the credentials
                     if error!.code == 499 {
@@ -157,9 +158,11 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
                     }
                 } else {
                     self.logAppInfo("There was an error loading the portal item")
+                    self.lastSelectedPortalItem = -1
                 }
             } else {
                 self.logAppInfo("There was an error loading the portal item: " + error.debugDescription)
+                self.lastSelectedPortalItem = -1
             }
             self.isLoggingIn = false
         }

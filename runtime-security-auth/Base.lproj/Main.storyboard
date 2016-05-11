@@ -196,20 +196,19 @@
                                     </connections>
                                 </button>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gIU-bW-Yh4">
-                                    <rect key="frame" x="290" y="352" width="20" height="20"/>
+                                    <rect key="frame" x="290" y="35" width="20" height="20"/>
                                 </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="gIU-bW-Yh4" firstAttribute="centerX" secondItem="Nlc-r9-ahy" secondAttribute="centerX" id="3Eh-I0-Vij"/>
                                 <constraint firstItem="0s6-tT-FSs" firstAttribute="leading" secondItem="Nlc-r9-ahy" secondAttribute="leading" constant="23" id="Cme-Wv-GGH"/>
                                 <constraint firstAttribute="bottom" secondItem="0s6-tT-FSs" secondAttribute="bottom" constant="256" id="Dkc-wr-Ndf"/>
                                 <constraint firstItem="0s6-tT-FSs" firstAttribute="top" secondItem="Nlc-r9-ahy" secondAttribute="top" constant="256" id="Ep7-Bf-pHO"/>
-                                <constraint firstItem="gIU-bW-Yh4" firstAttribute="leading" secondItem="Nlc-r9-ahy" secondAttribute="leading" constant="290" id="Pum-uw-siS"/>
-                                <constraint firstItem="gIU-bW-Yh4" firstAttribute="top" secondItem="0s6-tT-FSs" secondAttribute="bottom" constant="8" id="SIU-IR-iaD"/>
+                                <constraint firstItem="gIU-bW-Yh4" firstAttribute="top" secondItem="Nlc-r9-ahy" secondAttribute="top" constant="35" id="HW9-d1-wJ2"/>
                                 <constraint firstAttribute="trailing" secondItem="x2E-RZ-N1j" secondAttribute="trailing" constant="22" id="aDt-sw-wav"/>
                                 <constraint firstItem="x2E-RZ-N1j" firstAttribute="top" secondItem="Nlc-r9-ahy" secondAttribute="top" constant="25" id="etG-Pm-aZu"/>
                                 <constraint firstAttribute="trailing" secondItem="0s6-tT-FSs" secondAttribute="trailing" constant="22" id="qOP-bh-36y"/>
-                                <constraint firstAttribute="trailing" secondItem="gIU-bW-Yh4" secondAttribute="trailing" constant="290" id="zWy-ra-fCY"/>
                             </constraints>
                         </view>
                         <cells>
