@@ -15,11 +15,14 @@ public class TestData : NSObject {
     static let sharedTestData = TestData()
     private override init() {} // make sure no one outside can init this object.
     
+    var isUserLoggedIn = false
+    
     let forceUserToLogin = false
     let useCustomLoginView = true
     let portalURL:String = "http://www.arcgis.com"
     let clientId:String = "nr3zJGlmQKOqwo5O"
     
+    // A list of basemaps on my AGOL account
     // "image", "title", "itemId"
     let portalItems: Array = [
         ["Imagery_Labels_Trans", "Imagery With Labels", "d802f08316e84c6592ef681c50178f17"], // Esri imagery w/labels

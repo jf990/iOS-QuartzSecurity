@@ -16,8 +16,8 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
     var portal:AGSPortal!
     var portalItem:AGSPortalItem!
     var authenticationManager:AGSAuthenticationManager = AGSAuthenticationManager.sharedAuthenticationManager()
-    var isLoggedIn:Bool = false
     var isLoggingIn:Bool = false
+    var isKeyboardShowing = false
     var testData:TestData = TestData.sharedTestData;
     var lastSelectedPortalItem:Int = 0
     
@@ -38,6 +38,8 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         self.authenticationManager.delegate = self
         self.setupOAuth()
         self.loadMap()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -51,6 +53,24 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        if !self.isKeyboardShowing {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.loginButton.frame.origin.y -= keyboardSize.height
+                self.isKeyboardShowing = true
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if self.isKeyboardShowing {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.loginButton.frame.origin.y += keyboardSize.height
+                self.isKeyboardShowing = false
+            }
+        }
+    }
+
     /**
      * didReceiveAuthenticationChallenge is called by AGSAuthenticationManager when it needs to ask the user
      * to authenticate.
@@ -60,23 +80,17 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         self.logAppInfo("didReceiveAuthenticationChallenge asking to login with " + self.authenticationTypeFromChallengeType(challenge.type) + " authentication")
         self.activeChallenge = challenge
         switch challenge.type {
+            
         case AGSAuthenticationChallengeType.OAuth,
              AGSAuthenticationChallengeType.ClientCertificate,
+             AGSAuthenticationChallengeType.UsernamePassword,
              AGSAuthenticationChallengeType.UntrustedHost:
-            self.logAppInfo("Using default challenge handler")
             self.isLoggingIn = true
             if self.testData.useCustomLoginView {
+                self.logAppInfo("Using custom challenge handler")
                 self.showLoginView()
             } else {
-                self.activeChallenge!.continueWithDefaultHandling()
-            }
-            
-        case AGSAuthenticationChallengeType.UsernamePassword:
-            self.logAppInfo("Overriding challenge handler for name/password")
-            self.isLoggingIn = true
-            if self.testData.useCustomLoginView {
-                self.showLoginView()
-            } else {
+                self.logAppInfo("Using default challenge handler")
                 self.activeChallenge!.continueWithDefaultHandling()
             }
             
@@ -127,7 +141,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
     }
 
     /**
-     * Create a Map from the portal item held in the test data structure.
+     * Create a Map from the portal item. It is possible a login flow was invoked to get this item.
      */
     func createMapFromPortalItem (portalItemId:String, loginRequired:Bool) -> AGSMap {
         
@@ -135,10 +149,10 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         portal.loadWithCompletion() { (error) in
             if error == nil {
                 if portal.loadStatus == AGSLoadStatus.Loaded {
-                    self.logAppInfo("Loaded portal item " + portalItemId + ", maybe the user is logged in?")
-                    // Here's a problem: loading the map succeeds but we don't know if the authentication flow was invoked. This
-                    // forces our app to manage it's own version of user log-in state and guess we have it right.
                     if self.isLoggingIn {
+                        self.logAppInfo("Loaded portal item " + portalItemId + ", maybe the user is logged in?")
+                        // Here's a problem: loading the map succeeds but we don't know if the authentication flow was invoked. This
+                        // forces our app to manage it's own version of user log-in state and guess we have it right.
                         self.userIsLoggedIn()
                     }
                 } else {
@@ -152,6 +166,28 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         let portalItem = AGSPortalItem(portal: portal, itemID: portalItemId)
         return AGSMap(item: portalItem)
     }
+    
+    func loginToPortal () {
+        
+        let portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: true)
+        portal.loadWithCompletion() { (error) in
+            if error == nil {
+                if portal.loadStatus == AGSLoadStatus.Loaded {
+                    self.logAppInfo("Logged in to portal " + self.testData.portalURL)
+                    if (self.loginActivity.isAnimating()) {
+                        self.hideLoginView(true)
+                        self.userIsLoggedIn()
+                    }
+                } else {
+                    self.logAppInfo("There was an error loading the portal status: \(portal.loadStatus)")
+                }
+            } else {
+                self.logAppInfo("There was an error loading the portal: " + error.debugDescription)
+            }
+            self.isLoggingIn = false
+        }
+    }
+
     
     /**
      * Create a Map from a pre-defined basemap.
@@ -192,7 +228,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
      * Do things required by our app to maintain the user in a logged in state
      */
     func userIsLoggedIn () {
-        self.isLoggedIn = true
+        self.testData.isUserLoggedIn = true
         self.loginButton.setTitle("Log out", forState: UIControlState.Normal)
     }
     
@@ -201,8 +237,9 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
      */
     func userIsLoggedOut () {
         self.authenticationManager.credentialCache.removeAllCredentials()
-        self.isLoggedIn = false
+        self.testData.isUserLoggedIn = false
         self.loginButton.setTitle("Log in", forState: UIControlState.Normal)
+        self.logAppInfo("Logout complete - credentials cleared.")
     }
     
     /**
@@ -223,7 +260,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
             self.loginPassword.alpha = 1
             self.view.layoutIfNeeded()
             }, completion: { finished in
-                print("showing Login view")
+                self.logAppInfo("showing Login view")
         })
     }
     
@@ -233,6 +270,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
     func hideLoginView (animate:Bool) {
         self.loginActivity.stopAnimating()
         self.loginActivity.hidden = true
+        self.view.endEditing(true)
         if (animate) {
             UIView.animateWithDuration(0.4, delay: 0.1, options: .CurveEaseOut, animations: {
                 self.loginView.alpha = 0
@@ -277,16 +315,17 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
     
     @IBAction func loginButtonAction(sender: AnyObject) {
         
-        if isLoggedIn {
-            // logout
+        if self.testData.isUserLoggedIn {
+            // we think the user is logged in, so logout
             self.userIsLoggedOut()
         } else {
-            // login
+            // login UI flow
             if self.loginView.hidden {
-                self.showLoginView()
-            } else if (self.loginActivity.isAnimating()) {
-                self.hideLoginView(true)
+                // When popup is not showing we should do an unsolicited portal login
+                self.loginToPortal()
             } else {
+                // Login button was pressed with form showing. We should validate that user has filled in the form, then
+                // continue the login procedure.
                 self.startLoginActivity()
                 let credential = AGSCredential(user: loginUserName.text!, password: loginPassword.text!)
                 if self.activeChallenge != nil {
@@ -294,7 +333,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
                     self.activeChallenge!.continueWithCredential(credential)
                 } else {
                     // Here we should do an unsolicited login
-                    self.logAppInfo("THERE IS NO WAY TO LOG IN!")
+                    self.loginToPortal()
                 }
             }
         }
