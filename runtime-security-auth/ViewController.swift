@@ -10,7 +10,7 @@
 import UIKit
 import ArcGIS
 
-class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
+class ViewController: UIViewController, AGSAuthenticationManagerDelegate, UITextFieldDelegate {
 
     var activeChallenge:AGSAuthenticationChallenge?
     var authenticationManager:AGSAuthenticationManager = AGSAuthenticationManager.sharedAuthenticationManager()
@@ -302,6 +302,27 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
         self.loginActivity.startAnimating()
     }
     
+    func continueLoginWithCredentials () {
+        self.startLoginActivity()
+        let credential = AGSCredential(user: loginUserName.text!, password: loginPassword.text!)
+        if self.activeChallenge != nil {
+            self.logAppInfo("Trying to login for " + self.authenticationTypeFromChallengeType((self.activeChallenge?.type)!) + " authentication")
+            self.activeChallenge!.continueWithCredential(credential)
+        } else {
+            // Here we should do an unsolicited login
+            self.loginToPortal()
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.loginUserName {
+            self.loginPassword.becomeFirstResponder()
+        } else if textField == self.loginPassword {
+            self.continueLoginWithCredentials()
+        }
+        return true
+    }
+    
     @IBAction func mapSelectAction(sender:AnyObject) {
         // IB segue automatically handles the transition
     }
@@ -334,17 +355,8 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate {
             } else {
                 // Login button was pressed with form showing. We should validate that user has filled in the form, then
                 // continue the login procedure.
-                self.startLoginActivity()
-                let credential = AGSCredential(user: loginUserName.text!, password: loginPassword.text!)
-                if self.activeChallenge != nil {
-                    self.logAppInfo("Trying to login for " + self.authenticationTypeFromChallengeType((self.activeChallenge?.type)!) + " authentication")
-                    self.activeChallenge!.continueWithCredential(credential)
-                } else {
-                    // Here we should do an unsolicited login
-                    self.loginToPortal()
-                }
+                self.continueLoginWithCredentials()
             }
         }
     }
 }
-
