@@ -10,7 +10,7 @@
 import UIKit
 import ArcGIS
 
-class ViewController: UIViewController, AGSAuthenticationManagerDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, AGSAuthenticationManagerDelegate {
 
     var activeChallenge:AGSAuthenticationChallenge?
     var authenticationManager:AGSAuthenticationManager = AGSAuthenticationManager.sharedAuthenticationManager()
@@ -79,8 +79,10 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate, UIText
         self.activeChallenge = challenge
         switch challenge.type {
             
-        case AGSAuthenticationChallengeType.OAuth,
-             AGSAuthenticationChallengeType.ClientCertificate,
+        case AGSAuthenticationChallengeType.OAuth:
+             self.activeChallenge!.continueWithDefaultHandling()
+            
+        case AGSAuthenticationChallengeType.ClientCertificate,
              AGSAuthenticationChallengeType.UsernamePassword,
              AGSAuthenticationChallengeType.UntrustedHost:
             self.isLoggingIn = true
@@ -139,14 +141,19 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate, UIText
         }
     }
 
+    func getOrCreatePortal (loginRequired:Bool) -> AGSPortal {
+        if (self.testData.portal == nil) {
+            self.testData.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: loginRequired)
+        }
+        return self.testData.portal
+    }
+    
     /**
      * Create a Map from the portal item. It is possible a login flow was invoked to get this item.
      */
     func createMapFromPortalItem (portalItemId:String, loginRequired:Bool) -> AGSMap {
         
-        if (self.testData.portal == nil) {
-            self.testData.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: loginRequired)
-        }
+        self.getOrCreatePortal(loginRequired)
         self.testData.portal.loadWithCompletion() { (error) in
             if error == nil {
                 if self.testData.portal.loadStatus == AGSLoadStatus.Loaded {
@@ -174,9 +181,7 @@ class ViewController: UIViewController, AGSAuthenticationManagerDelegate, UIText
      */
     func loginToPortal () {
         
-        if (self.testData.portal == nil) {
-            self.testData.portal = AGSPortal (URL: NSURL(string: self.testData.portalURL)!, loginRequired: true)
-        }
+        self.getOrCreatePortal(true)
         self.testData.portal.loadWithCompletion() { (error) in
             if error == nil {
                 if self.testData.portal.loadStatus == AGSLoadStatus.Loaded {

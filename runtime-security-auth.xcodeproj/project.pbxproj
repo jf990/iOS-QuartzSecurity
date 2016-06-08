@@ -16,6 +16,7 @@
 		E7069A141CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */; };
 		E7069A151CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */; };
 		E7069A161CDD413A00928782 /* mapPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */; };
+		E7378BE51CF4EA55009A8CDB /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7378BE41CF4EA55009A8CDB /* ArcGIS.bundle */; };
 		E7C46F3C1CC59F2900D58826 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F3B1CC59F2900D58826 /* AppDelegate.swift */; };
 		E7C46F3E1CC59F2900D58826 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C46F3D1CC59F2900D58826 /* ViewController.swift */; };
 		E7C46F411CC59F2900D58826 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C46F3F1CC59F2900D58826 /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		E7069A0B1CD948C000928782 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		E7069A0F1CDC152300928782 /* mapPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapPickerViewController.swift; sourceTree = "<group>"; };
 		E7069A131CDD413A00928782 /* mapPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapPickerCollectionViewCell.swift; sourceTree = "<group>"; };
+		E7378BE41CF4EA55009A8CDB /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 		E7C46F381CC59F2900D58826 /* runtime-security-auth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "runtime-security-auth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7C46F3B1CC59F2900D58826 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7C46F3D1CC59F2900D58826 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		E7C46F2F1CC59F2800D58826 = {
 			isa = PBXGroup;
 			children = (
+				E7378BE41CF4EA55009A8CDB /* ArcGIS.bundle */,
 				E7C46F6C1CC7044E00D58826 /* README.md */,
 				E7C46F3A1CC59F2900D58826 /* runtime-security-auth */,
 				E7C46F521CC59F2900D58826 /* runtime-security-authTests */,
@@ -254,6 +257,7 @@
 			files = (
 				E7C46F491CC59F2900D58826 /* LaunchScreen.storyboard in Resources */,
 				E7C46F461CC59F2900D58826 /* Assets.xcassets in Resources */,
+				E7378BE51CF4EA55009A8CDB /* ArcGIS.bundle in Resources */,
 				E7C46F411CC59F2900D58826 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
